@@ -25,10 +25,7 @@ export const addComment = async (
 ) => {
   const response = await axios.post(
     `${API_BASE_URL}/tasks/${task}/comments`,
-    // {
-    //   text: "პრიორიტეტი მიენიჭება ვანილა react-ით დაწერას?",
-    //   //parent_id: 1,
-    // },
+
     data,
     {
       headers: {
@@ -37,5 +34,21 @@ export const addComment = async (
       },
     }
   );
+  return response.data;
+};
+
+export const addEmployee = async (formData: FormData) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/employees
+`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+      },
+    }
+  );
+  console.log(response);
+
   return response.data;
 };

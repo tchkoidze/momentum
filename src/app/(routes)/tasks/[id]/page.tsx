@@ -49,14 +49,6 @@ const TaskBYId = () => {
     fetchStatuses();
   }, []);
 
-  //const { id } = router.query;
-
-  // const { data, isPending, error } = useQuery({
-  //   queryKey: ["task", taskId],
-  //   queryFn: () => getTaskById(taskId),
-  //   staleTime: 5 * 60 * 1000,
-  // });
-
   const getTask = async (taskId: string) => {
     setLoading(true);
     setFetchError(null);
