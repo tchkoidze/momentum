@@ -1,15 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import CreateEmployee from "../components/CreateEmployee";
 import Header from "../components/Header";
 import { usePathname } from "next/navigation";
+import { ModalProvider } from "./ModalContext";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 function Layout({ children }: LayoutProps) {
-  const [showAddEmployeeMOdal, setShowAddEmployeeMOdal] = useState(false);
+  // const [showAddEmployeeMOdal, setShowAddEmployeeMOdal] = useState(false);
 
   const pathname = usePathname();
   useEffect(() => {
@@ -26,19 +27,21 @@ function Layout({ children }: LayoutProps) {
     }
   }, [pathname]);
   return (
-    <div className="w-full">
-      <Header
-        showAddEmployeeMOdal={showAddEmployeeMOdal}
-        setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
-      />
-      <div className="flex justify-center">{children}</div>
-      {showAddEmployeeMOdal && (
-        <CreateEmployee
-          showAddEmployeeMOdal={showAddEmployeeMOdal}
-          setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
+    <ModalProvider>
+      <div className="w-full">
+        <Header
+        // showAddEmployeeMOdal={showAddEmployeeMOdal}
+        // setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
         />
-      )}
-    </div>
+        <div className="flex justify-center">{children}</div>
+        {/* {showAddEmployeeMOdal && ( */}
+        <CreateEmployee
+        // showAddEmployeeMOdal={showAddEmployeeMOdal}
+        // setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
+        />
+        {/* )} */}
+      </div>
+    </ModalProvider>
   );
 }
 export default Layout;

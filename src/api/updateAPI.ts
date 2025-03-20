@@ -1,3 +1,4 @@
+import { Data } from "@/types/type";
 import axios from "axios";
 const apiToken = process.env.NEXT_PUBLIC_API_ACCESS_TOKEN;
 
@@ -48,7 +49,24 @@ export const addEmployee = async (formData: FormData) => {
       },
     }
   );
+  // console.log(response);
+
+  return response;
+};
+
+export const addTask = async (formData: Data) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/tasks
+
+`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+      },
+    }
+  );
   console.log(response);
 
-  return response.data;
+  return response;
 };

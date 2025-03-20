@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { addTaskSchema } from "./taskSchema";
+import { addTask } from "@/api/updateAPI";
+import { useModal } from "../ModalContext";
 
 const initialData = {
   name: "",
@@ -23,7 +25,16 @@ const initialData = {
   priority_id: "",
 };
 
+// {
+//   showAddEmployeeMOdal,
+//   setShowAddEmployeeMOdal,
+// }: {
+//   showAddEmployeeMOdal: boolean;
+//   setShowAddEmployeeMOdal: React.Dispatch<React.SetStateAction<boolean>>;
+// }
+
 const CreateTask = () => {
+  const { showAddEmployeeMOdal, setShowAddEmployeeMOdal } = useModal();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [priorities, setPriorities] = useState<Priority[]>([]);
   const [statuses, setStatuses] = useState<Status[]>([]);
@@ -177,8 +188,37 @@ const CreateTask = () => {
     localStorage.setItem("createdTasktData", JSON.stringify(data));
   }, [data]);
 
-  const onSubmit = (formData: Data) => {
-    console.log("task data: ", formData);
+  const onSubmit = async (taskData: Data) => {
+    console.log("task data: ", taskData);
+
+    const formData = {
+      name: taskData.name,
+      description: taskData.description,
+      due_date: taskData.due_date,
+      status_id: taskData.status_id,
+      department_id: taskData.department_id,
+      employee_id: taskData.employee_id,
+      priority_id: taskData.priority_id,
+    };
+
+    try {
+      const res = await addTask(formData);
+      if (res && res.status >= 200 && res.status < 300)
+        localStorage.removeItem("createdTasktData");
+      setData({
+        name: "",
+        description: null,
+        due_date: new Date(new Date().setDate(new Date().getDate() + 1))
+          .toISOString()
+          .split("T")[0],
+        status_id: "",
+        department_id: "",
+        employee_id: "",
+        priority_id: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -472,9 +512,9 @@ const CreateTask = () => {
                           );
                           return employee
                             ? `${employee.name} ${employee.surname}`
-                            : "შერჩევა";
+                            : "";
                         })()
-                      : "შერჩევა"}
+                      : ""}
                     <IoChevronDownOutline
                       size={14}
                       className={`${dropdownEmployee && "rotate-180"} ${
@@ -489,7 +529,8 @@ const CreateTask = () => {
                       <li>
                         <button
                           type="button"
-                          className="w-full flex items-center gap-2 text-xs text-[#8338EC] px-2.5 py-2.5"
+                          onClick={() => setShowAddEmployeeMOdal(true)}
+                          className="w-full flex items-center gap-2 text-xs text-[#8338EC] px-2.5 py-2.5 cursor-pointer"
                         >
                           <Image
                             src="/plus-circle.svg"
