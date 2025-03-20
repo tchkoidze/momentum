@@ -333,7 +333,7 @@ const Tasks = () => {
   }, [tasks, filters]);
 
   return (
-    <div className="w-fit">
+    <div className="w-[1920px] px-[120px]">
       <h1 className="font-semibold text-[34px] mb-[52px]">
         დავალებების გვერდი
       </h1>

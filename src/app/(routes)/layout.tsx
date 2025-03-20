@@ -31,7 +31,7 @@ function Layout({ children }: LayoutProps) {
         showAddEmployeeMOdal={showAddEmployeeMOdal}
         setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
       />
-      <div>{children}</div>
+      <div className="flex justify-center">{children}</div>
       {showAddEmployeeMOdal && (
         <CreateEmployee
           showAddEmployeeMOdal={showAddEmployeeMOdal}

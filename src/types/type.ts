@@ -52,6 +52,16 @@ export type Comment = {
   sub_comments: Comment[];
 };
 
+export type Data = {
+  name: string;
+  description: string | null;
+  due_date: string;
+  status_id: string;
+  department_id: string;
+  employee_id: string;
+  priority_id: string;
+};
+
 // type Department = {
 //   id: number;
 //   name: string;

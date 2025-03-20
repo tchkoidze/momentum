@@ -397,15 +397,6 @@ const CreateEmployee = ({
               {dropdownDepartments && (
                 <ul>
                   {departments.map((department) => (
-                    // <li
-                    //   // onClick={() =>
-                    //   //   updateTaskStatus(task.id.toString(), status.id)
-                    //   // }
-                    //   key={department.id}
-                    //   className="text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
-                    // >
-                    //   {department.name}
-                    // </li>
                     <li
                       key={department.id}
                       className="h-[40.5px] w-full block"

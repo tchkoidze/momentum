@@ -22,9 +22,9 @@ const TaskCard = ({ task }: { task: Task }) => {
   const handleNavigation = (id: number) => {
     router.push(`/tasks/${id}`);
   };
-  console.log(
-    new Intl.DateTimeFormat("ka-GE", { month: "short" }).format(new Date())
-  );
+  // console.log(
+  //   new Intl.DateTimeFormat("ka-GE", { month: "short" }).format(new Date())
+  // );
 
   return (
     <div
