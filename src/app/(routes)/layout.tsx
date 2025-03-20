@@ -33,7 +33,7 @@ function Layout({ children }: LayoutProps) {
         // showAddEmployeeMOdal={showAddEmployeeMOdal}
         // setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
         />
-        <div className="flex justify-center">{children}</div>
+        <div className="">{children}</div>
         {/* {showAddEmployeeMOdal && ( */}
         <CreateEmployee
         // showAddEmployeeMOdal={showAddEmployeeMOdal}

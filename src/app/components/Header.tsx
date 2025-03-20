@@ -14,8 +14,11 @@ const Header = () =>
     const { showAddEmployeeMOdal, setShowAddEmployeeMOdal } = useModal();
     const router = useRouter();
     return (
-      <header className="flex justify-between px-[120px] py-[30px]">
-        <button>
+      <header className="flex justify-between px-[120px] py-[30px] w-[1920px] mx-auto">
+        <button
+          onClick={() => router.push("/tasks")}
+          className="cursor-pointer"
+        >
           <Image src={"/Logo.svg"} alt="logo" width={210} height={38} />
         </button>
         <div className="flex gap-10">

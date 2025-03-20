@@ -85,7 +85,7 @@ const TaskBYId = () => {
   };
 
   return (
-    <div className="flex gap-[223px] mt-10 mb-[100px]">
+    <div className="flex gap-[223px] mt-10 mb-[100px] w-[1920px] px-[120px] mx-auto">
       {task && (
         <div className="w-[715px]">
           <div className="mb-[63px]">

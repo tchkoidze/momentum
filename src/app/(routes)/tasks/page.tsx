@@ -333,30 +333,47 @@ const Tasks = () => {
   }, [tasks, filters]);
 
   return (
-    <div className="w-[1920px] px-[120px]">
-      <h1 className="font-semibold text-[34px] mb-[52px]">
+    <div className="w-[1920px] px-[120px] mx-auto">
+      <h1 className="firago-semibold text-[34px] leading-[41px] mb-[52px]">
         დავალებების გვერდი
       </h1>
       <div className="relative">
-        <div className="w-[688px] flex gap-[45px] text-base border border-[#DEE2E6] rounded-md">
+        <div className="w-[688px] flex gap-[45px] firago-regular text-base border border-[#DEE2E6] rounded-md">
           <button
             onClick={() => toggleDropdown("department")}
-            className="flex items-center gap-2 pl-[18px] pr-[30px] py-2.5 cursor-pointer"
+            className={`flex items-center gap-2 pl-[18px] pr-[30px] py-2.5 cursor-pointer ${
+              openFilter === "department" && "text-[#8338EC]"
+            }`}
           >
-            დეპარტამენტი <IoChevronDownOutline size={26} />
+            დეპარტამენტი{" "}
+            <IoChevronDownOutline
+              size={26}
+              className={` ${openFilter === "department" && "rotate-180"}`}
+            />
           </button>
           <button
             onClick={() => toggleDropdown("priority")}
-            className="flex items-center gap-2 pl-[18px] pr-[30px] py-2.5"
+            className={`flex items-center gap-2 pl-[18px] pr-[30px] py-2.5 cursor-pointer ${
+              openFilter === "priority" && "text-[#8338EC]"
+            }`}
           >
-            პრიორიტეტი <IoChevronDownOutline size={26} />
+            პრიორიტეტი{" "}
+            <IoChevronDownOutline
+              size={26}
+              className={` ${openFilter === "priority" && "rotate-180"}`}
+            />
           </button>
           <button
             onClick={() => toggleDropdown("employee")}
-            className="flex items-center gap-2 pl-[18px] pr-[30px] py-2.5"
+            className={`flex items-center gap-2 pl-[18px] pr-[30px] py-2.5 cursor-pointer ${
+              openFilter === "employee" && "text-[#8338EC]"
+            }`}
           >
             თანამშრომელი
-            <IoChevronDownOutline size={26} />
+            <IoChevronDownOutline
+              size={26}
+              className={` ${openFilter === "employee" && "rotate-180"}`}
+            />
           </button>
         </div>
         <div className="flex gap-2 h-[29px] my-6">
@@ -435,7 +452,7 @@ const Tasks = () => {
         <div
           className={`${
             openFilter === "department" ? "block" : "hidden"
-          } absolute z-10 top-14 w-[688px] text-base text-[#212529] bg-white border-[0.5px] border-[#8338EC] rounded-md space-y-6 px-8 pt-10 pb-5`}
+          } absolute z-10 top-14 w-[688px] firago-regular text-base text-[#212529] bg-white border-[0.5px] border-[#8338EC] rounded-md space-y-6 px-8 pt-10 pb-5`}
         >
           <ul className="space-y-5">
             {departments?.map((department) => (
@@ -512,7 +529,7 @@ const Tasks = () => {
             openFilter === "employee" ? "block" : "hidden"
           } absolute z-10 top-14 w-[688px] text-base text-[#212529] border-[0.5px] bg-white border-[#8338EC] rounded-md space-y-6 px-8 pt-10 pb-5`}
         >
-          <ul className="space-y-5">
+          <ul className="space-y-5 max-h-[178px] overflow-y-scroll">
             {employees?.length > 0 ? (
               employees.map((employee) => (
                 <li key={employee.id}>
@@ -591,7 +608,7 @@ const Tasks = () => {
           {statuses.map((status) => (
             <div key={status.name}>
               <button
-                className={`w-[381px] h-[54px] text-[20px] font-medium text-white rounded-[10px] ${
+                className={`w-[381px] h-[54px] firago-medium text-[20px] font-medium text-white rounded-[10px] ${
                   status.name === "დასაწყები"
                     ? "bg-[#F7BC30]"
                     : status.name === "პროგრესში"

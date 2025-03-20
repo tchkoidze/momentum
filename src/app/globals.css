@@ -1,3 +1,8 @@
+/* @import url("https://free.bboxtype.com/embedfonts/?family=FiraGO:300,400,500,600,700"); */
+@font-face {
+  font-family: "FiraGO";
+  src: url("/assets/fonts/ttf/firago-latin-400-normal.ttf");
+}
 @import "tailwindcss";
 
 :root {
@@ -26,4 +31,56 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "FiraGo", sans-serif;
+  font-weight: 400;
+}
+
+.firago-light {
+  font-family: "FiraGo", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.firago-regular {
+  font-family: "FiraGo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.firago-medium {
+  font-family: "FiraGo", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.firago-semibold {
+  font-family: "FiraGo", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.firago-bold {
+  font-family: "FiraGo", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid #8338ec;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked::before {
+  content: url('data:image/svg+xml,<svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.4546 1.4541L4.57959 9.63592L1.45459 5.91691" stroke="%238338EC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  top: -2px;
+  left: 3px;
 }

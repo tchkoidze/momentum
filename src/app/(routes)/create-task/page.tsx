@@ -222,7 +222,7 @@ const CreateTask = () => {
   };
 
   return (
-    <div className="w-[1920px] px-[120px]">
+    <div className="w-[1920px] px-[120px] mx-auto">
       <h1 className="font-semibold text-[34px] text-[#212529] mt-10 mb-6">
         შექმენი ახალი დავალება
       </h1>
@@ -276,7 +276,7 @@ const CreateTask = () => {
                     <button
                       type="button"
                       onClick={() => setDropdownPriorities(!dropDownPriorities)}
-                      className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px]"
+                      className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
                     >
                       {data?.priority_id
                         ? (() => {
@@ -357,7 +357,7 @@ const CreateTask = () => {
                     <button
                       type="button"
                       onClick={() => setDropdownStatus(!dropDownStatus)}
-                      className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px]"
+                      className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px]  cursor-pointer"
                     >
                       {data?.status_id
                         ? statuses.find(
@@ -426,7 +426,7 @@ const CreateTask = () => {
                   <button
                     type="button"
                     onClick={() => setDropdownDepartments(!dropdownDepartments)}
-                    className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px]"
+                    className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
                   >
                     {data?.department_id
                       ? departments.find(
@@ -503,7 +503,7 @@ const CreateTask = () => {
                   <button
                     type="button"
                     onClick={() => setDropdownEmployee(!dropdownEmployee)}
-                    className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px]"
+                    className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
                   >
                     {data?.employee_id
                       ? (() => {
@@ -612,7 +612,7 @@ const CreateTask = () => {
               <input
                 type="date"
                 id="date"
-                className="w-full border border-[#CED4DA] outline-none rounded-md p-2.5 my-1"
+                className="w-full border border-[#CED4DA] outline-none rounded-md p-2.5 my-1 cursor-pointer"
                 {...register("due_date")}
                 onChange={(e) =>
                   handleInputChange("due_date", e.currentTarget.value)
@@ -623,7 +623,7 @@ const CreateTask = () => {
           </div>
         </div>
         <div className="w-[1261px] flex justify-end mt-[147px] mb-[62px]">
-          <button className="h-[42px] text-white bg-[#8338EC] hover:bg-[#B588F4] focus:bg-[#B588F4] text-lg rounded-md px-5">
+          <button className="h-[42px] text-white bg-[#8338EC] hover:bg-[#B588F4] focus:bg-[#B588F4] text-lg rounded-md px-5  cursor-pointer">
             დავალების შექმნა
           </button>
         </div>

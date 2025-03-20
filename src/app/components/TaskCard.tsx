@@ -84,7 +84,7 @@ const TaskCard = ({ task }: { task: Task }) => {
         </p>
       </div>
       <div className="my-7">
-        <h3 className="font-medium text-[15px] text-[#212529] mb-3">
+        <h3 className="firago-semibold text-[15px] leading-[18px] text-[#212529] mb-3">
           {task.name}
         </h3>
         <p
@@ -94,7 +94,7 @@ const TaskCard = ({ task }: { task: Task }) => {
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
           }}
-          className="text-sm text-[#343A40]"
+          className="firago-regular text-sm leading-[17px] text-[#343A40]"
         >
           {task.description}
         </p>

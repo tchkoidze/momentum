@@ -119,12 +119,12 @@ const CreateEmployee = () =>
         onClick={() => setShowAddEmployeeMOdal(false)}
         className={`w-full h-full fixed top-0 z-20 ${
           showAddEmployeeMOdal ? "flex" : "hidden"
-        } items-center justify-center bg-[#0D0F1026]`}
+        } justify-center bg-[#0D0F1026]`}
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
           onClick={(e) => e.stopPropagation()}
-          className="w-[913px] bg-white px-[50px] pt-10 pb-[60px] rounded-[10px]"
+          className="w-[913px] h-fit bg-white px-[50px] pt-10 pb-[60px] rounded-[10px] mt-[118px]"
         >
           <div className="flex justify-end">
             <button
