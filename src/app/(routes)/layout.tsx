@@ -10,34 +10,21 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  // const [showAddEmployeeMOdal, setShowAddEmployeeMOdal] = useState(false);
-
   const pathname = usePathname();
   useEffect(() => {
     const referrer = document.referrer;
 
     if (pathname !== "/tasks") {
       sessionStorage.removeItem("filters");
-      sessionStorage.removeItem("prioritySelector");
-      sessionStorage.removeItem("employeeSelector");
-      sessionStorage.removeItem("departmentSelector");
-
-      console.log("Session storage cleared on navigation:", pathname);
     }
   }, [pathname]);
   return (
     <ModalProvider>
       <div className="w-full">
-        <Header
-        // showAddEmployeeMOdal={showAddEmployeeMOdal}
-        // setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
-        />
+        <Header />
         <div className="">{children}</div>
-        {/* {showAddEmployeeMOdal && ( */}
-        <CreateEmployee
-        // showAddEmployeeMOdal={showAddEmployeeMOdal}
-        // setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
-        />
+
+        <CreateEmployee />
       </div>
     </ModalProvider>
   );

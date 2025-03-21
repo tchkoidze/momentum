@@ -22,9 +22,9 @@ const TaskCard = ({ task }: { task: Task }) => {
   const handleNavigation = (id: number) => {
     router.push(`/tasks/${id}`);
   };
-  // console.log(
-  //   new Intl.DateTimeFormat("ka-GE", { month: "short" }).format(new Date())
-  // );
+  // color rendomizer
+  const colors = ["#FFD86D", "#89B6FF", "#FD9A6A", "#FF66A8"];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
   return (
     <div
@@ -39,7 +39,7 @@ const TaskCard = ({ task }: { task: Task }) => {
           : "border-[#3A86FF]"
       } rounded-2xl p-5 mt-5`}
     >
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div className="flex gap-2.5 flex-wrap items-center">
           <div
             className={`flex items-center gap-1 text-xs font-medium border-[0.5px] ${
@@ -48,7 +48,7 @@ const TaskCard = ({ task }: { task: Task }) => {
                 : task.priority.name === "საშუალო"
                 ? "text-[#FFBE0B] border-[#FFBE0B]"
                 : "text-[#FA4D4D] border-[#FA4D4D]"
-            } p-1 rounded-[5px]`}
+            } py-1 pl-1 pr-[14px] rounded-[5px]`}
           >
             <Image
               src={task.priority.icon}
@@ -58,19 +58,16 @@ const TaskCard = ({ task }: { task: Task }) => {
             />
             <p>{task.priority.name}</p>
           </div>
-          <p className="w-fit flex items-center bg-[#FF66A8] text-[12px]  text-white rounded-2xl px-4 py-1">
-            {task.department.name}
+          <p
+            style={{ backgroundColor: randomColor }}
+            className="w-fit flex items-center text-[12px] text-white rounded-2xl px-4 py-1"
+          >
+            {task.department.name.length > 15
+              ? task.department.name.slice(0, 12) + "..."
+              : task.department.name}
           </p>
         </div>
         <p className="shrink-0 text-sm text-[#212529] ml-1">
-          {/* {new Date(task.due_date)
-            .toLocaleString("ka-GE", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })
-            .replace(" at", "")} */}
-
           {new Intl.DateTimeFormat("en-US", {
             day: "2-digit",
             month: "short",

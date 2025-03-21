@@ -177,8 +177,10 @@ const CreateTask = () => {
       department_id: taskData.department_id,
       employee_id: taskData.employee_id,
       priority_id: taskData.priority_id,
-      ...(taskData.description && { department_id: taskData.department_id }),
+      ...(taskData.description && { description: taskData.description }),
     };
+
+    console.log("task data: ", formData);
 
     try {
       const res = await addTask(formData);
@@ -449,12 +451,6 @@ const CreateTask = () => {
                                 className="hidden"
                               />
                               <p className="flex items-center gap-2">
-                                {/* <Image
-                              src={priority.icon}
-                              alt="priority-icon"
-                              width={16}
-                              height={18}
-                            /> */}
                                 {status.name}
                               </p>
                             </label>
@@ -498,7 +494,6 @@ const CreateTask = () => {
                         <li
                           key={department.id}
                           className="h-[40.5px] w-full block"
-                          // className="text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
                         >
                           <label
                             htmlFor={`${department.id}`}
@@ -538,122 +533,113 @@ const CreateTask = () => {
             </div>
 
             <div className="mt-[100px]">
-              <p
-                className={`font-medium text-base ${
-                  data?.department_id ? "text-[#343A40]" : "text-[#ADB5BD]"
-                } mb-1`}
-              >
-                პასუხისმგებელი თანამშრომელი*
-              </p>
-              <div className="relative h-[45px]">
-                <div className="absolute w-full border border-[#CED4DA] rounded-[5px] bg-white">
-                  <button
-                    type="button"
-                    onClick={() => setDropdownEmployee(!dropdownEmployee)}
-                    className="w-full flex items-center justify-between text-sm font-light text-[#0D0F10] p-[14px] cursor-pointer"
-                  >
-                    {data?.employee_id
-                      ? (() => {
-                          const employee = employees.find(
-                            (em) => em.id.toString() === data?.employee_id
-                          );
-                          return employee
-                            ? `${employee.name} ${employee.surname}`
-                            : "";
-                        })()
-                      : ""}
-                    <IoChevronDownOutline
-                      size={14}
-                      className={`${dropdownEmployee && "rotate-180"} ${
-                        data?.department_id
-                          ? "text-[#343A40]"
-                          : "text-[#ADB5BD]"
-                      } ml-auto`}
-                    />
-                  </button>
-                  {data?.department_id && dropdownEmployee && (
-                    <ul className="max-h-[276px] overflow-y-scroll">
-                      <li>
-                        <button
-                          type="button"
-                          onClick={() => setShowAddEmployeeMOdal(true)}
-                          className="w-full flex items-center gap-2 text-xs text-[#8338EC] px-2.5 py-2.5 cursor-pointer"
-                        >
-                          <Image
-                            src="/plus-circle.svg"
-                            alt="plus image"
-                            width={18}
-                            height={18}
-                          />
-                          დაამატე თანამშრომელი
-                        </button>
-                      </li>
-                      {employees
-                        .filter(
-                          (employee) =>
-                            employee.department.id.toString() ===
-                            data?.department_id
-                        )
-                        .map((employee) => (
-                          <li
-                            key={employee.id}
-                            className="h-fit w-full block"
-                            // className="text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
+              <div className={`${data?.department_id ? "block" : "hidden"}`}>
+                <p
+                  className={`font-medium text-base ${
+                    data?.department_id ? "text-[#343A40]" : "text-[#ADB5BD]"
+                  } mb-1`}
+                >
+                  პასუხისმგებელი თანამშრომელი*
+                </p>
+                <div className="relative h-[45px]">
+                  <div className="absolute w-full border border-[#CED4DA] rounded-[5px] bg-white">
+                    <button
+                      type="button"
+                      onClick={() => setDropdownEmployee(!dropdownEmployee)}
+                      className="w-full flex items-center justify-between text-sm font-light text-[#0D0F10] p-[14px] cursor-pointer"
+                    >
+                      {data?.employee_id
+                        ? (() => {
+                            const employee = employees.find(
+                              (em) => em.id.toString() === data?.employee_id
+                            );
+                            return employee
+                              ? `${employee.name} ${employee.surname}`
+                              : "";
+                          })()
+                        : ""}
+                      <IoChevronDownOutline
+                        size={14}
+                        className={`${dropdownEmployee && "rotate-180"} ${
+                          data?.department_id
+                            ? "text-[#343A40]"
+                            : "text-[#ADB5BD]"
+                        } ml-auto`}
+                      />
+                    </button>
+                    {data?.department_id && dropdownEmployee && (
+                      <ul className="max-h-[276px] overflow-y-scroll">
+                        <li>
+                          <button
+                            type="button"
+                            onClick={() => setShowAddEmployeeMOdal(true)}
+                            className="w-full flex items-center gap-2 text-xs text-[#8338EC] px-2.5 py-2.5 cursor-pointer"
                           >
-                            <label
-                              htmlFor={`${employee.id}`}
-                              className="w-full h-[46px] block text-[11px] font-light text-[#0D0F10] cursor-pointer"
+                            <Image
+                              src="/plus-circle.svg"
+                              alt="plus image"
+                              width={18}
+                              height={18}
+                            />
+                            დაამატე თანამშრომელი
+                          </button>
+                        </li>
+                        {employees
+                          .filter(
+                            (employee) =>
+                              employee.department.id.toString() ===
+                              data?.department_id
+                          )
+                          .map((employee) => (
+                            <li
+                              key={employee.id}
+                              className="h-fit w-full block"
+                              // className="text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
                             >
-                              <input
-                                type="radio"
-                                id={`${employee.id}`}
-                                value={employee.id}
-                                {...register("employee_id")}
-                                onClick={(
-                                  e: React.MouseEvent<HTMLInputElement>
-                                ) => {
-                                  setDropdownEmployee(false);
-                                  //setSelectedDepartment(e.currentTarget.value);
-                                  handleInputChange(
-                                    "employee_id",
-                                    e.currentTarget.value
-                                  );
-                                }}
-                                className="hidden"
-                              />
-                              <div className="flex items-center gap-2.5 p-2">
-                                <div className="w-[28px] h-[28px]">
-                                  <Image
-                                    src={employee.avatar}
-                                    alt="avatar"
-                                    width={28}
-                                    height={28}
-                                    className="w-full h-full object-cover rounded-full"
-                                  />
-                                </div>
+                              <label
+                                htmlFor={`${employee.id}`}
+                                className="w-full h-[46px] block text-[11px] font-light text-[#0D0F10] cursor-pointer"
+                              >
+                                <input
+                                  type="radio"
+                                  id={`${employee.id}`}
+                                  value={employee.id}
+                                  {...register("employee_id")}
+                                  onClick={(
+                                    e: React.MouseEvent<HTMLInputElement>
+                                  ) => {
+                                    setDropdownEmployee(false);
+                                    //setSelectedDepartment(e.currentTarget.value);
+                                    handleInputChange(
+                                      "employee_id",
+                                      e.currentTarget.value
+                                    );
+                                  }}
+                                  className="hidden"
+                                />
+                                <div className="flex items-center gap-2.5 p-2">
+                                  <div className="w-[28px] h-[28px]">
+                                    <Image
+                                      src={employee.avatar}
+                                      alt="avatar"
+                                      width={28}
+                                      height={28}
+                                      className="w-full h-full object-cover rounded-full"
+                                    />
+                                  </div>
 
-                                <p>
-                                  {employee.name} {employee.surname}
-                                </p>
-                              </div>
-                            </label>
-                          </li>
-                        ))}
-                    </ul>
-                  )}
+                                  <p>
+                                    {employee.name} {employee.surname}
+                                  </p>
+                                </div>
+                              </label>
+                            </li>
+                          ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
               </div>
-              {/* <p
-                className={`flex gap-[2px] font-[350] text-[10px] mt-[6px] ${
-                  dirtyFields.department && errors.department
-                    ? "text-[#F93B1D]"
-                    : dirtyFields.department
-                    ? "text-[#45A849]"
-                    : "text-[#6C757D]"
-                }`}
-              >
-                სავალდებულო
-              </p> */}
             </div>
             <div className="mt-auto">
               <label

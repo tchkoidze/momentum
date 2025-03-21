@@ -24,7 +24,6 @@ import { IoChevronDownOutline, IoCloseOutline } from "react-icons/io5";
 
 const initialFilters: Filters = {
   departments: [],
-  // employee: null,
   employee: undefined,
   priorities: [],
 };
@@ -44,93 +43,7 @@ const Tasks = () => {
   const [prioritySelector, setPrioritySelector] = useState<string[]>([]);
   const [filters, setFilters] = useState<Filters>(initialFilters);
 
-  // const [departmentSelector, setDepartmentSelector] = useState<string[]>(() => {
-  //   const storedDepartments = sessionStorage.getItem("departmentSelector");
-  //   try {
-  //     const parsedDepartments = storedDepartments
-  //       ? JSON.parse(storedDepartments)
-  //       : [];
-  //     return Array.isArray(parsedDepartments) ? parsedDepartments : [];
-  //   } catch (error) {
-  //     console.error("Error parsing stored prioritySelector:", error);
-  //     return [];
-  //   }
-  // });
-
-  // const [employeeSelector, setEmployeeSelector] = useState<
-  //   { id: number; name: string; surname: string } | undefined
-  // >(() => {
-  //   const storedEmployee = sessionStorage.getItem("employeeSelector");
-  //   return storedEmployee ? JSON.parse(storedEmployee) : undefined;
-  // });
-
-  // const [prioritySelector, setPrioritySelector] = useState<string[]>(() => {
-  //   const storedPriority = sessionStorage.getItem("prioritySelector");
-  //   // storedPriority ? JSON.parse(storedPriority) : [];
-  //   try {
-  //     const parsedPriority = storedPriority ? JSON.parse(storedPriority) : [];
-  //     return Array.isArray(parsedPriority) ? parsedPriority : [];
-  //   } catch (error) {
-  //     console.error("Error parsing stored prioritySelector:", error);
-  //     return [];
-  //   }
-  // });
-
-  // const [filters, setFilters] = useState<Filters>(() => {
-  //   const storedFilters = sessionStorage.getItem("filters");
-  //   return storedFilters ? JSON.parse(storedFilters) : initialFilters;
-  // });
-
   useEffect(() => {
-    // For departmentSelector
-    const storedDepartments = sessionStorage.getItem("departmentSelector");
-    if (
-      storedDepartments &&
-      storedDepartments !== "undefined" &&
-      storedDepartments !== ""
-    ) {
-      try {
-        const parsedDepartments = JSON.parse(storedDepartments);
-        setDepartmentSelector(
-          Array.isArray(parsedDepartments) ? parsedDepartments : []
-        );
-      } catch (error) {
-        console.error("Error parsing stored departmentSelector:", error);
-      }
-    }
-
-    // For employeeSelector
-    const storedEmployee = sessionStorage.getItem("employeeSelector");
-    if (
-      storedEmployee &&
-      storedEmployee !== "undefined" &&
-      storedEmployee !== ""
-    ) {
-      try {
-        const parsedEmployee = JSON.parse(storedEmployee);
-        setEmployeeSelector(parsedEmployee);
-      } catch (error) {
-        console.error("Error parsing stored employeeSelector:", error);
-      }
-    }
-
-    // For prioritySelector
-    const storedPriority = sessionStorage.getItem("prioritySelector");
-    if (
-      storedPriority &&
-      storedPriority !== "undefined" &&
-      storedPriority !== ""
-    ) {
-      try {
-        const parsedPriority = JSON.parse(storedPriority);
-        setPrioritySelector(
-          Array.isArray(parsedPriority) ? parsedPriority : []
-        );
-      } catch (error) {
-        console.error("Error parsing stored prioritySelector:", error);
-      }
-    }
-
     // For filters
     const storedFilters = sessionStorage.getItem("filters");
     if (
@@ -149,76 +62,6 @@ const Tasks = () => {
       }
     }
   }, []);
-  // useEffect(() => {
-  //   // For departmentSelector
-  //   const storedDepartments = sessionStorage.getItem("departmentSelector");
-  //   if (storedDepartments) {
-  //     try {
-  //       const parsedDepartments = JSON.parse(storedDepartments);
-  //       setDepartmentSelector(
-  //         Array.isArray(parsedDepartments) ? parsedDepartments : []
-  //       );
-  //     } catch (error) {
-  //       console.error("Error parsing stored departmentSelector:", error);
-  //     }
-  //   }
-
-  //   // For employeeSelector
-  //   const storedEmployee = sessionStorage.getItem("employeeSelector");
-  //   if (storedEmployee) {
-  //     try {
-  //       const parsedEmployee = JSON.parse(storedEmployee);
-  //       setEmployeeSelector(parsedEmployee);
-  //     } catch (error) {
-  //       console.error("Error parsing stored employeeSelector:", error);
-  //     }
-  //   }
-
-  //   // For prioritySelector
-  //   const storedPriority = sessionStorage.getItem("prioritySelector");
-  //   if (storedPriority) {
-  //     try {
-  //       const parsedPriority = JSON.parse(storedPriority);
-  //       setPrioritySelector(
-  //         Array.isArray(parsedPriority) ? parsedPriority : []
-  //       );
-  //     } catch (error) {
-  //       console.error("Error parsing stored prioritySelector:", error);
-  //     }
-  //   }
-
-  //   // For filters
-  //   const storedFilters = sessionStorage.getItem("filters");
-  //   if (storedFilters) {
-  //     try {
-  //       const parsedFilters = JSON.parse(storedFilters);
-  //       setFilters(parsedFilters);
-  //     } catch (error) {
-  //       console.error("Error parsing stored filters:", error);
-  //     }
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   sessionStorage.setItem(
-  //     "departmentSelector",
-  //     JSON.stringify(departmentSelector)
-  //   );
-  // }, [departmentSelector]);
-
-  // useEffect(() => {
-  //   sessionStorage.setItem(
-  //     "employeeSelector",
-  //     JSON.stringify(employeeSelector)
-  //   );
-  // }, [employeeSelector]);
-
-  // useEffect(() => {
-  //   sessionStorage.setItem(
-  //     "prioritySelector",
-  //     JSON.stringify(prioritySelector)
-  //   );
-  // }, [prioritySelector]);
 
   useEffect(() => {
     sessionStorage.setItem("filters", JSON.stringify(filters));
@@ -379,79 +222,8 @@ const Tasks = () => {
             />
           </button>
         </div>
-        {/* <div className="flex gap-2 h-[29px] my-6">
-          <ul className="flex flex-wrap gap-2">
-            {filters.departments.map((department) => (
-              <li key={department}>
-                <button
-                  onClick={() => {
-                    setFilters((prevFilters) => ({
-                      ...prevFilters,
-                      departments: prevFilters.departments.filter(
-                        (d) => d !== department
-                      ),
-                    }));
-                    setDepartmentSelector((prevDep) =>
-                      prevDep.filter((d) => d !== department)
-                    );
-                  }}
-                  className="h-full flex items-center gap-1 text-sm text-[#343A40] border border-[#CED4DA] px-2.5 rounded-[43px]"
-                >
-                  {department} <IoCloseOutline color="#343A40" size={16} />
-                </button>
-              </li>
-            ))}
-          </ul>
-          {filters.priorities && (
-            <ul className="flex gap-2">
-              {filters.priorities.map((priority) => (
-                <li key={priority}>
-                  <button
-                    onClick={() => {
-                      setFilters((prevFilters) => ({
-                        ...prevFilters,
-                        priorities: prevFilters.priorities.filter(
-                          (p) => p !== priority
-                        ),
-                      }));
-                      setPrioritySelector((prevPriority) =>
-                        prevPriority.filter((p) => p !== priority)
-                      );
-                    }}
-                    className="h-full flex items-center gap-1 text-sm text-[#343A40] border border-[#CED4DA] px-2.5 rounded-[43px] cursor-pointer"
-                  >
-                    {priority} <IoCloseOutline color="#343A40" size={16} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-          {filters.employee && (
-            <button
-              onClick={() => {
-                setFilters((prevFilters) => ({
-                  ...prevFilters,
-                  employee: undefined,
-                }));
-                setEmployeeSelector(undefined);
-              }}
-              className="flex items-center gap-1 text-sm text-[#343A40] border border-[#CED4DA] px-2.5 rounded-[43px] cursor-pointer"
-            >
-              {filters.employee.name} {filters.employee.surname}
-              <IoCloseOutline color="#343A40" size={16} />
-            </button>
-          )}
-          {(filters.departments.length > 0 ||
-            filters.employee ||
-            filters.priorities.length > 0) && (
-            <button
-              onClick={() => setFilters(initialFilters)}
-              className="text-sm text-[#021526CC] cursor-pointer"
-            >
-              გასუფთავება
-            </button>
-          )}
-        </div> */}
+
+        {/* selected filters */}
         <div className="flex gap-2 min-h-[29px] my-6">
           <ul className="flex flex-wrap gap-2">
             {filters.departments.map((department) => (
@@ -529,23 +301,9 @@ const Tasks = () => {
               </li>
             )}
           </ul>
-
-          {/* {(filters.departments.length > 0 ||
-            filters.employee ||
-            filters.priorities.length > 0) && (
-            <button
-              onClick={() => {
-                setFilters(initialFilters);
-                setDepartmentSelector([]);
-                setPrioritySelector([]);
-                setEmployeeSelector(undefined);
-              }}
-              className="text-sm text-[#021526CC] cursor-pointer"
-            >
-              გასუფთავება
-            </button>
-          )} */}
         </div>
+
+        {/*department filter dropdown  */}
         <div
           className={`${
             openFilter === "department" ? "block" : "hidden"
@@ -583,6 +341,7 @@ const Tasks = () => {
             არჩევა
           </button>
         </div>
+        {/* priority filter dropdown */}
         <div
           className={`${
             openFilter === "priority" ? "block" : "hidden"
@@ -621,6 +380,7 @@ const Tasks = () => {
             არჩევა
           </button>
         </div>
+        {/* employee filter dropdown */}
         <div
           className={`${
             openFilter === "employee" ? "block" : "hidden"
@@ -686,22 +446,6 @@ const Tasks = () => {
 
       <div className="">
         <div className="grid grid-cols-2 2xl:grid-cols-4 gap-[54px]">
-          {/* {statuses.map((status) => (
-            <button
-              key={status.name}
-              className={`w-[381px] h-[54px] text-[20px] font-medium text-white rounded-[10px] ${
-                status.name === "დასაწყები"
-                  ? "bg-[#F7BC30]"
-                  : status.name === "პროგრესში"
-                  ? "bg-[#FB5607]"
-                  : status.name === "მზად ტესტირებისთვის"
-                  ? "bg-[#FF006E]"
-                  : "bg-[#3A86FF]"
-              }`}
-            >
-              {status.name}
-            </button>
-          ))} */}
           {statuses.map((status) => (
             <div key={status.name}>
               <button
@@ -727,7 +471,6 @@ const Tasks = () => {
           ))}
         </div>
       </div>
-      {/* <CreateEmployee /> */}
     </div>
   );
 };

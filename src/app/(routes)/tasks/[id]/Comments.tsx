@@ -100,13 +100,6 @@ const Comments = ({ task }: { task: number }) => {
                 className="w-full h-full object-cover rounded-full"
                 unoptimized
               />
-              {/* <img
-                src={comment.author_avatar}
-                alt="avatar"
-                width={38}
-                height={38}
-                className="w-full h-full object-cover rounded-full"
-              /> */}
             </div>
             <div className="grow">
               <p>{comment.author_nickname}</p>
@@ -137,14 +130,12 @@ const Comments = ({ task }: { task: number }) => {
                     onKeyDown={(event) => {
                       if (event.key === "Enter" && !event.shiftKey) {
                         event.preventDefault();
-                        handleSendComment(comment.id); //handleSendComment(comment.parent_id ?? undefined);
+                        handleSendComment(comment.id);
                         setShowSubcomment(null);
                       }
                     }}
-                    //onChange={(event) => setText(event.target.value)}
                     onChange={(event) => setSubcommentText(event.target.value)}
                     value={subCommentText}
-                    //value={text}
                   ></textarea>
                 </div>
                 <div className="space-y-2.5 mt-5">

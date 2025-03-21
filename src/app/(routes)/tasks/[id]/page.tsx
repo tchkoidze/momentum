@@ -4,7 +4,7 @@ import { updateStatuse } from "@/api/updateAPI";
 import { Status, Task } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiPieChart } from "react-icons/fi";
 import { FiUser } from "react-icons/fi";
@@ -34,7 +34,9 @@ const TaskBYId = () => {
   const taskIdFromParams = params.id as string;
   const taskId = taskIdFromParams;
 
-  const router = useRouter();
+  // color rendomizer
+  const colors = ["#FFD86D", "#89B6FF", "#FD9A6A", "#FF66A8"];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
   useEffect(() => {
     const fetchStatuses = async () => {
@@ -97,7 +99,7 @@ const TaskBYId = () => {
                     : task.priority.name === "საშუალო"
                     ? "text-[#FFBE0B] border-[#FFBE0B]"
                     : "text-[#FA4D4D] border-[#FA4D4D]"
-                } p-1 rounded-[5px]`}
+                } py-1 pl-1 pr-[14px] p rounded-[5px]`}
               >
                 <Image
                   src={task.priority.icon}
@@ -107,7 +109,10 @@ const TaskBYId = () => {
                 />
                 <p>{task.priority.name}</p>
               </div>
-              <p className="w-fit flex items-center bg-[#FF66A8] text-[12px]  text-white rounded-2xl px-4 py-1">
+              <p
+                style={{ backgroundColor: randomColor }}
+                className="w-fit flex items-center text-[12px]  text-white rounded-2xl px-4 py-1"
+              >
                 {task.department.name}
               </p>
             </div>
