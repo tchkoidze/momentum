@@ -17,7 +17,6 @@ function Layout({ children }: LayoutProps) {
     const referrer = document.referrer;
 
     if (pathname !== "/tasks") {
-      // Only clear storage when NOT on home page
       sessionStorage.removeItem("filters");
       sessionStorage.removeItem("prioritySelector");
       sessionStorage.removeItem("employeeSelector");
@@ -39,7 +38,6 @@ function Layout({ children }: LayoutProps) {
         // showAddEmployeeMOdal={showAddEmployeeMOdal}
         // setShowAddEmployeeMOdal={setShowAddEmployeeMOdal}
         />
-        {/* )} */}
       </div>
     </ModalProvider>
   );

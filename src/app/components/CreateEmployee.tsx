@@ -31,6 +31,7 @@ const CreateEmployee = () =>
 
     const {
       register,
+      reset,
       handleSubmit,
       formState: { errors, dirtyFields },
     } = useForm({ resolver: zodResolver(addEmployeeSchema), mode: "onChange" });
@@ -107,13 +108,17 @@ const CreateEmployee = () =>
 
       try {
         const res = await addEmployee(formData);
-        if (res && res.status >= 200 && res.status < 300)
+        if (res && res.status >= 200 && res.status < 300) {
           setShowAddEmployeeMOdal(false);
+          reset();
+          setSelectedImage("");
+        }
         console.log("respo :", res);
       } catch (error) {
         console.log(error);
       }
     };
+
     return (
       <div
         onClick={() => setShowAddEmployeeMOdal(false)}

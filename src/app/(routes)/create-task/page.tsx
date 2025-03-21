@@ -14,26 +14,10 @@ import { IoChevronDownOutline } from "react-icons/io5";
 import { addTaskSchema } from "./taskSchema";
 import { addTask } from "@/api/updateAPI";
 import { useModal } from "../ModalContext";
-
-const initialData = {
-  name: "",
-  description: "",
-  due_date: "",
-  status_id: "",
-  department_id: "",
-  employee_id: "",
-  priority_id: "",
-};
-
-// {
-//   showAddEmployeeMOdal,
-//   setShowAddEmployeeMOdal,
-// }: {
-//   showAddEmployeeMOdal: boolean;
-//   setShowAddEmployeeMOdal: React.Dispatch<React.SetStateAction<boolean>>;
-// }
+import { useRouter } from "next/navigation";
 
 const CreateTask = () => {
+  const router = useRouter();
   const { showAddEmployeeMOdal, setShowAddEmployeeMOdal } = useModal();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [priorities, setPriorities] = useState<Priority[]>([]);
@@ -44,6 +28,8 @@ const CreateTask = () => {
   const [dropDownStatus, setDropdownStatus] = useState(false);
   const [dropdownEmployee, setDropdownEmployee] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false);
+
   const [data, setData] = useState<Data>({
     name: "",
     description: null,
@@ -61,7 +47,7 @@ const CreateTask = () => {
     setValue,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm({
     resolver: zodResolver(addTaskSchema),
     defaultValues: {
@@ -115,24 +101,8 @@ const CreateTask = () => {
       }
     };
     fetchEmployees();
-  }, []);
+  }, [showAddEmployeeMOdal]);
 
-  // useEffect(() => {
-  //   if (priorities.length > 0 && statuses.length > 0) {
-  //     const priorityId =
-  //       priorities.find((p) => p.id === 2)?.id.toString() ?? "";
-  //     const statusId =
-  //       statuses.find((s) => s.name === "დასაწყები")?.id.toString() ?? "";
-
-  //     setValue("priority_id", priorityId);
-  //     setValue("status_id", statusId);
-  //     setData((prevData) => ({
-  //       ...prevData,
-  //       priority_id: priorityId,
-  //       status_id: statusId,
-  //     }));
-  //   }
-  // }, [priorities, statuses, setValue]);
   useEffect(() => {
     if (priorities.length > 0 && statuses.length > 0) {
       const priorityId =
@@ -140,7 +110,6 @@ const CreateTask = () => {
       const statusId =
         statuses.find((s) => s.name === "დასაწყები")?.id.toString() ?? "";
 
-      // Only set values if they haven't been set in localStorage
       if (!data?.priority_id) {
         setValue("priority_id", priorityId);
         setData((prevData) => ({
@@ -160,13 +129,22 @@ const CreateTask = () => {
   }, [priorities, statuses, setValue]);
 
   const handleInputChange = (fieldName: string, value: string) => {
-    setData(
-      (prevData) =>
-        ({
-          ...prevData,
-          [fieldName]: value,
-        } as Data)
-    );
+    // setData(
+    //   (prevData) =>
+    //     ({
+    //       ...prevData,
+    //       [fieldName]: value,
+    //     } as Data)
+    // );
+    setData((prevData) => {
+      let updatedData = { ...prevData, [fieldName]: value };
+
+      if (fieldName === "department_id") {
+        updatedData.employee_id = "";
+      }
+
+      return updatedData as Data;
+    });
   };
 
   useEffect(() => {
@@ -193,12 +171,13 @@ const CreateTask = () => {
 
     const formData = {
       name: taskData.name,
-      description: taskData.description,
+
       due_date: taskData.due_date,
       status_id: taskData.status_id,
       department_id: taskData.department_id,
       employee_id: taskData.employee_id,
       priority_id: taskData.priority_id,
+      ...(taskData.description && { department_id: taskData.department_id }),
     };
 
     try {
@@ -216,6 +195,7 @@ const CreateTask = () => {
         employee_id: "",
         priority_id: "",
       });
+      router.push("/tasks");
     } catch (error) {
       console.log(error);
     }
@@ -235,48 +215,120 @@ const CreateTask = () => {
             <div className="flex flex-col">
               <label
                 htmlFor="title"
-                className="firago-medium font-medium text-base "
+                className="firago-regular text-base text-[#343A40]"
               >
                 სათაური*
               </label>
               <input
                 id="title"
                 type="text"
-                className="border border-[#CED4DA] outline-none rounded-md p-2.5 my-1"
-                {...register("name")}
-                onChange={(e) => handleInputChange("name", e.target.value)}
+                className="firago-light text-sm text-[#0D0F10] bg-white border border-[#CED4DA] outline-none rounded-md p-2.5 mt-1"
+                {...register("name", {
+                  onChange: (e) => handleInputChange("name", e.target.value),
+                })}
               />
+              <div>
+                <p>{errors.name?.message}</p>
+                <p
+                  className={`flex gap-[2px] font-[350] text-[10px] text-[#6C757D] ${
+                    dirtyFields.name && errors.name
+                      ? "text-[#FA4D4D]"
+                      : dirtyFields.name
+                      ? "text-[#08A508]"
+                      : ""
+                  }`}
+                >
+                  სავალდებულო
+                </p>
+                <p
+                  className={`flex gap-[2px] font-[350] text-[10px] text-[#6C757D] ${
+                    dirtyFields.name && errors.name
+                      ? "text-[#FA4D4D]"
+                      : dirtyFields.name
+                      ? "text-[#08A508]"
+                      : ""
+                  }`}
+                >
+                  მინიმუმ 2 სიმბოლო
+                </p>
+                <p
+                  className={`flex gap-[2px] font-[350] text-[10px] text-[#6C757D] ${
+                    dirtyFields.name && errors.name
+                      ? "text-[#FA4D4D]"
+                      : dirtyFields.name
+                      ? "text-[#08A508]"
+                      : ""
+                  }`}
+                >
+                  მაქსიმუმ 255 სიმბოლო
+                </p>
+              </div>
             </div>
 
             <div className="w-full flex flex-col">
-              <label htmlFor="description" className="firago-medium">
+              <label
+                htmlFor="description"
+                className="firago-regular text-base text-[#343A40]"
+              >
                 აღწერა
               </label>
               <textarea
                 id="description"
                 rows={6}
-                className="resize-none outline-none border border-[#DEE2E6] rounded-md p-[14px] my-1"
-                {...register("description")}
-                onChange={(e) =>
-                  handleInputChange("description", e.target.value)
-                }
-                // {...register("description", {
-                //   onChange: (e) =>
-                //     handleInputChange("description", e.target.value),
-                // })}
+                className="firago-light text-sm text-[#0D0F10] bg-white resize-none outline-none border border-[#DEE2E6] rounded-md p-[14px] mt-1"
+                {...register("description", {
+                  onChange: (e) =>
+                    handleInputChange("description", e.target.value),
+                })}
               ></textarea>
+              <div>
+                <p>{errors.description?.message}</p>
+                <p
+                  className={`flex gap-[2px] font-[350] text-[10px] text-[#6C757D] ${
+                    dirtyFields.description && errors.description
+                      ? "text-[#FA4D4D]"
+                      : dirtyFields.description
+                      ? "text-[#08A508]"
+                      : ""
+                  }`}
+                >
+                  არასავალდებულო
+                </p>
+                <p
+                  className={`flex gap-[2px] font-[350] text-[10px] text-[#6C757D] ${
+                    dirtyFields.description && errors.description
+                      ? "text-[#FA4D4D]"
+                      : dirtyFields.description
+                      ? "text-[#08A508]"
+                      : ""
+                  }`}
+                >
+                  მინიმუმ 4 სიტყვა
+                </p>
+                <p
+                  className={`flex gap-[2px] font-[350] text-[10px] text-[#6C757D] ${
+                    dirtyFields.description && errors.description
+                      ? "text-[#FA4D4D]"
+                      : dirtyFields.description
+                      ? "text-[#08A508]"
+                      : ""
+                  }`}
+                >
+                  მაქსიმუმ 255 სიმბოლო
+                </p>
+              </div>
             </div>
             <div className="w-full flex gap-8">
               <div className="w-1/2">
-                <p className="font-medium text-base leading-[17px] text-[#343A40] mb-[3px]">
+                <p className="font-regular text-base text-[#343A40] mb-1">
                   პრიორიტეტი*
                 </p>
-                <div className="relative h-[45px]">
+                <div className="relative h-[45px] mt-1">
                   <div className="absolute w-full border border-[#CED4DA] rounded-[5px] bg-white">
                     <button
                       type="button"
                       onClick={() => setDropdownPriorities(!dropDownPriorities)}
-                      className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
+                      className="w-full flex items-center justify-between text-sm font-light text-[#0D0F10] p-[14px] cursor-pointer"
                     >
                       {data?.priority_id
                         ? (() => {
@@ -294,7 +346,7 @@ const CreateTask = () => {
                                 {priority.name}
                               </p>
                             ) : (
-                              "ა"
+                              ""
                             );
                           })()
                         : ""}
@@ -349,15 +401,15 @@ const CreateTask = () => {
               </div>
 
               <div className="w-1/2">
-                <p className="font-medium text-base leading-[17px] text-[#343A40] mb-[3px]">
-                  სტატუსი
+                <p className="font-regular text-base text-[#343A40] mb-1">
+                  სტატუსი*
                 </p>
                 <div className="relative h-[45px]">
                   <div className="absolute w-full border border-[#CED4DA] rounded-[5px] bg-white">
                     <button
                       type="button"
                       onClick={() => setDropdownStatus(!dropDownStatus)}
-                      className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px]  cursor-pointer"
+                      className="w-full flex items-center justify-between text-sm font-light text-[#0D0F10] p-[14px]  cursor-pointer"
                     >
                       {data?.status_id
                         ? statuses.find(
@@ -416,9 +468,9 @@ const CreateTask = () => {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col">
             <div>
-              <p className="font-medium text-base leading-[17px] text-[#343A40] mb-[3px]">
+              <p className="font-regular text-base text-[#343A40] mb-1">
                 დეპარტამენტი*
               </p>
               <div className="relative h-[45px]">
@@ -426,7 +478,7 @@ const CreateTask = () => {
                   <button
                     type="button"
                     onClick={() => setDropdownDepartments(!dropdownDepartments)}
-                    className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
+                    className="w-full flex items-center justify-between text-sm font-light text-[#0D0F10] p-[14px] cursor-pointer"
                   >
                     {data?.department_id
                       ? departments.find(
@@ -456,16 +508,22 @@ const CreateTask = () => {
                               type="radio"
                               id={`${department.id}`}
                               value={department.id}
-                              {...register("department_id")}
+                              {...register("department_id", {
+                                onChange: (e) =>
+                                  handleInputChange(
+                                    "department_id",
+                                    e.currentTarget.value
+                                  ),
+                              })}
                               onClick={(
                                 e: React.MouseEvent<HTMLInputElement>
                               ) => {
                                 setDropdownDepartments(false);
                                 setSelectedDepartment(e.currentTarget.value);
-                                handleInputChange(
-                                  "department_id",
-                                  e.currentTarget.value
-                                );
+                                // handleInputChange(
+                                //   "department_id",
+                                //   e.currentTarget.value
+                                // );
                               }}
                               className="hidden"
                             />
@@ -477,24 +535,13 @@ const CreateTask = () => {
                   )}
                 </div>
               </div>
-              {/* <p
-                className={`flex gap-[2px] font-[350] text-[10px] mt-[6px] ${
-                  dirtyFields.department && errors.department
-                    ? "text-[#F93B1D]"
-                    : dirtyFields.department
-                    ? "text-[#45A849]"
-                    : "text-[#6C757D]"
-                }`}
-              >
-                სავალდებულო
-              </p> */}
             </div>
 
-            <div>
+            <div className="mt-[100px]">
               <p
-                className={`font-medium text-base leading-[17px]  ${
+                className={`font-medium text-base ${
                   data?.department_id ? "text-[#343A40]" : "text-[#ADB5BD]"
-                } mb-[3px]`}
+                } mb-1`}
               >
                 პასუხისმგებელი თანამშრომელი*
               </p>
@@ -503,7 +550,7 @@ const CreateTask = () => {
                   <button
                     type="button"
                     onClick={() => setDropdownEmployee(!dropdownEmployee)}
-                    className="w-full flex items-center justify-between text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
+                    className="w-full flex items-center justify-between text-sm font-light text-[#0D0F10] p-[14px] cursor-pointer"
                   >
                     {data?.employee_id
                       ? (() => {
@@ -541,51 +588,57 @@ const CreateTask = () => {
                           დაამატე თანამშრომელი
                         </button>
                       </li>
-                      {employees.map((employee) => (
-                        <li
-                          key={employee.id}
-                          className="h-fit w-full block"
-                          // className="text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
-                        >
-                          <label
-                            htmlFor={`${employee.id}`}
-                            className="w-full h-[46px] block text-[11px] font-light text-[#0D0F10] cursor-pointer"
+                      {employees
+                        .filter(
+                          (employee) =>
+                            employee.department.id.toString() ===
+                            data?.department_id
+                        )
+                        .map((employee) => (
+                          <li
+                            key={employee.id}
+                            className="h-fit w-full block"
+                            // className="text-[11px] font-light text-[#0D0F10] p-[14px] cursor-pointer"
                           >
-                            <input
-                              type="radio"
-                              id={`${employee.id}`}
-                              value={employee.id}
-                              {...register("employee_id")}
-                              onClick={(
-                                e: React.MouseEvent<HTMLInputElement>
-                              ) => {
-                                setDropdownEmployee(false);
-                                //setSelectedDepartment(e.currentTarget.value);
-                                handleInputChange(
-                                  "employee_id",
-                                  e.currentTarget.value
-                                );
-                              }}
-                              className="hidden"
-                            />
-                            <div className="flex items-center gap-2.5 p-2">
-                              <div className="w-[28px] h-[28px]">
-                                <Image
-                                  src={employee.avatar}
-                                  alt="avatar"
-                                  width={28}
-                                  height={28}
-                                  className="w-full h-full object-cover rounded-full"
-                                />
-                              </div>
+                            <label
+                              htmlFor={`${employee.id}`}
+                              className="w-full h-[46px] block text-[11px] font-light text-[#0D0F10] cursor-pointer"
+                            >
+                              <input
+                                type="radio"
+                                id={`${employee.id}`}
+                                value={employee.id}
+                                {...register("employee_id")}
+                                onClick={(
+                                  e: React.MouseEvent<HTMLInputElement>
+                                ) => {
+                                  setDropdownEmployee(false);
+                                  //setSelectedDepartment(e.currentTarget.value);
+                                  handleInputChange(
+                                    "employee_id",
+                                    e.currentTarget.value
+                                  );
+                                }}
+                                className="hidden"
+                              />
+                              <div className="flex items-center gap-2.5 p-2">
+                                <div className="w-[28px] h-[28px]">
+                                  <Image
+                                    src={employee.avatar}
+                                    alt="avatar"
+                                    width={28}
+                                    height={28}
+                                    className="w-full h-full object-cover rounded-full"
+                                  />
+                                </div>
 
-                              <p>
-                                {employee.name} {employee.surname}
-                              </p>
-                            </div>
-                          </label>
-                        </li>
-                      ))}
+                                <p>
+                                  {employee.name} {employee.surname}
+                                </p>
+                              </div>
+                            </label>
+                          </li>
+                        ))}
                     </ul>
                   )}
                 </div>
@@ -602,23 +655,34 @@ const CreateTask = () => {
                 სავალდებულო
               </p> */}
             </div>
-            <div>
+            <div className="mt-auto">
               <label
                 htmlFor="date"
-                className="w-full block text-base leading-[17px] text-[#343A40] mb-[6px]"
+                className="w-full block font-medium text-base text-[#343A40] mb-1"
               >
                 დედლაინი
               </label>
               <input
                 type="date"
                 id="date"
-                className="w-full border border-[#CED4DA] outline-none rounded-md p-2.5 my-1 cursor-pointer"
-                {...register("due_date")}
-                onChange={(e) =>
-                  handleInputChange("due_date", e.currentTarget.value)
-                }
+                className="w-full font-light text-sm border border-[#CED4DA] outline-none rounded-md px-2.5 py-[14px] cursor-pointer"
+                {...register("due_date", {
+                  onChange: (e) =>
+                    handleInputChange("due_date", e.currentTarget.value),
+                })}
                 min={new Date().toISOString().split("T")[0]}
               />
+              <p
+                className={`font-[350] text-[10px] text-[#6C757D] ${
+                  dirtyFields.due_date && errors.due_date
+                    ? "text-[#FA4D4D]"
+                    : dirtyFields.description
+                    ? "text-[#08A508]"
+                    : ""
+                }`}
+              >
+                {errors.due_date?.message}
+              </p>
             </div>
           </div>
         </div>

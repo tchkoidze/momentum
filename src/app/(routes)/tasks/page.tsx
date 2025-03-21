@@ -376,7 +376,7 @@ const Tasks = () => {
             />
           </button>
         </div>
-        <div className="flex gap-2 h-[29px] my-6">
+        {/* <div className="flex gap-2 h-[29px] my-6">
           <ul className="flex flex-wrap gap-2">
             {filters.departments.map((department) => (
               <li key={department}>
@@ -448,6 +448,100 @@ const Tasks = () => {
               გასუფთავება
             </button>
           )}
+        </div> */}
+        <div className="flex gap-2 min-h-[29px] my-6">
+          <ul className="flex flex-wrap gap-2">
+            {filters.departments.map((department) => (
+              <li key={department} className="h-[29px]">
+                <button
+                  onClick={() => {
+                    setFilters((prevFilters) => ({
+                      ...prevFilters,
+                      departments: prevFilters.departments.filter(
+                        (d) => d !== department
+                      ),
+                    }));
+                    setDepartmentSelector((prevDep) =>
+                      prevDep.filter((d) => d !== department)
+                    );
+                  }}
+                  className="h-full flex items-center gap-1 text-sm text-[#343A40] border border-[#CED4DA] px-2.5 rounded-[43px]"
+                >
+                  {department} <IoCloseOutline color="#343A40" size={16} />
+                </button>
+              </li>
+            ))}
+            {filters.priorities.map((priority) => (
+              <li key={priority} className="h-[29px]">
+                <button
+                  onClick={() => {
+                    setFilters((prevFilters) => ({
+                      ...prevFilters,
+                      priorities: prevFilters.priorities.filter(
+                        (p) => p !== priority
+                      ),
+                    }));
+                    setPrioritySelector((prevPriority) =>
+                      prevPriority.filter((p) => p !== priority)
+                    );
+                  }}
+                  className="h-full flex items-center gap-1 text-sm text-[#343A40] border border-[#CED4DA] px-2.5 rounded-[43px] cursor-pointer"
+                >
+                  {priority} <IoCloseOutline color="#343A40" size={16} />
+                </button>
+              </li>
+            ))}
+            {filters.employee && (
+              <li className="h-[29px]">
+                <button
+                  onClick={() => {
+                    setFilters((prevFilters) => ({
+                      ...prevFilters,
+                      employee: undefined,
+                    }));
+                    setEmployeeSelector(undefined);
+                  }}
+                  className="h-full flex items-center gap-1 text-sm text-[#343A40] border border-[#CED4DA] px-2.5 rounded-[43px] cursor-pointer"
+                >
+                  {filters.employee.name} {filters.employee.surname}
+                  <IoCloseOutline color="#343A40" size={16} />
+                </button>
+              </li>
+            )}
+            {(filters.departments.length > 0 ||
+              filters.employee ||
+              filters.priorities.length > 0) && (
+              <li>
+                <button
+                  onClick={() => {
+                    setFilters(initialFilters);
+                    setDepartmentSelector([]);
+                    setPrioritySelector([]);
+                    setEmployeeSelector(undefined);
+                  }}
+                  className="h-full text-sm text-[#021526CC] px-2.5 cursor-pointer"
+                >
+                  გასუფთავება
+                </button>
+              </li>
+            )}
+          </ul>
+
+          {/* {(filters.departments.length > 0 ||
+            filters.employee ||
+            filters.priorities.length > 0) && (
+            <button
+              onClick={() => {
+                setFilters(initialFilters);
+                setDepartmentSelector([]);
+                setPrioritySelector([]);
+                setEmployeeSelector(undefined);
+              }}
+              className="text-sm text-[#021526CC] cursor-pointer"
+            >
+              გასუფთავება
+            </button>
+          )} */}
         </div>
         <div
           className={`${

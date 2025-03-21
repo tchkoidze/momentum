@@ -54,7 +54,7 @@ export type Comment = {
 
 export type Data = {
   name: string;
-  description: string | null;
+  description?: string | null;
   due_date: string;
   status_id: string;
   department_id: string;
