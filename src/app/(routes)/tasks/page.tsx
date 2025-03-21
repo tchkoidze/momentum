@@ -175,7 +175,7 @@ const Tasks = () => {
   }, [tasks, filters]);
 
   return (
-    <div className="w-[1920px] px-[120px] mx-auto">
+    <div className="w-[1920px] px-[120px] mx-auto mb-[152px]">
       <h1 className="firago-semibold text-[34px] leading-[41px] mb-[52px]">
         დავალებების გვერდი
       </h1>
