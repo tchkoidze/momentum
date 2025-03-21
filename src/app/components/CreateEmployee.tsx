@@ -352,43 +352,6 @@ const CreateEmployee = () => {
             </div>
           </div>
           <p className="text-[#F93B1D]">{imageUploadError}</p>
-          {/* <div>
-            <p
-              className={`flex gap-[2px] font-[350] text-[10px] ${
-                dirtyFields.avatar && errors.avatar
-                  ? "text-[#F93B1D]"
-                  : dirtyFields.avatar
-                  ? "text-[#45A849]"
-                  : "text-[#6C757D]"
-              }`}
-            >
-              <FaCheck size={16} />
-              სავალდებულო
-            </p>
-            <p
-              className={`flex gap-[2px] font-[350] text-[10px] ${
-                dirtyFields.avatar && errors.avatar
-                  ? "text-[#F93B1D]"
-                  : dirtyFields.avatar
-                  ? "text-[#45A849]"
-                  : "text-[#6C757D]"
-              }`}
-            >
-              <FaCheck size={16} />
-              მაქსიმუმ 600kb ზომაში
-            </p>
-            <p
-              className={`flex gap-[2px] font-[350] text-[10px] ${
-                dirtyFields.avatar && errors.avatar
-                  ? "text-[#F93B1D]"
-                  : dirtyFields.avatar
-                  ? "text-[#45A849]"
-                  : "text-[#6C757D]"
-              }`}
-            >
-              <FaCheck size={16} /> უნდა იყოს სურათის ტიპის
-            </p>
-          </div> */}
         </div>
 
         <div>
@@ -462,7 +425,11 @@ const CreateEmployee = () => {
         <div className="flex justify-end gap-[22px] mt-6">
           <button
             type="button"
-            onClick={() => setShowAddEmployeeMOdal(false)}
+            onClick={() => {
+              setShowAddEmployeeMOdal(false);
+              reset();
+              setSelectedImage("");
+            }}
             className="h-[42px] border border-[#8338EC] hover:border-[#B588F4] focus:border-[#B588F4] px-4 rounded-md cursor-pointer"
           >
             გაუქმება
