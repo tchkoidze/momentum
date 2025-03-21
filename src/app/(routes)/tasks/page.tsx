@@ -141,6 +141,9 @@ const Tasks = () => {
       try {
         const parsedFilters = JSON.parse(storedFilters);
         setFilters(parsedFilters);
+        setDepartmentSelector(parsedFilters.departments);
+        setPrioritySelector(parsedFilters.priorities);
+        parsedFilters.employee ?? setEmployeeSelector(parsedFilters.employee);
       } catch (error) {
         console.error("Error parsing stored filters:", error);
       }
@@ -196,26 +199,26 @@ const Tasks = () => {
   //   }
   // }, []);
 
-  useEffect(() => {
-    sessionStorage.setItem(
-      "departmentSelector",
-      JSON.stringify(departmentSelector)
-    );
-  }, [departmentSelector]);
+  // useEffect(() => {
+  //   sessionStorage.setItem(
+  //     "departmentSelector",
+  //     JSON.stringify(departmentSelector)
+  //   );
+  // }, [departmentSelector]);
 
-  useEffect(() => {
-    sessionStorage.setItem(
-      "employeeSelector",
-      JSON.stringify(employeeSelector)
-    );
-  }, [employeeSelector]);
+  // useEffect(() => {
+  //   sessionStorage.setItem(
+  //     "employeeSelector",
+  //     JSON.stringify(employeeSelector)
+  //   );
+  // }, [employeeSelector]);
 
-  useEffect(() => {
-    sessionStorage.setItem(
-      "prioritySelector",
-      JSON.stringify(prioritySelector)
-    );
-  }, [prioritySelector]);
+  // useEffect(() => {
+  //   sessionStorage.setItem(
+  //     "prioritySelector",
+  //     JSON.stringify(prioritySelector)
+  //   );
+  // }, [prioritySelector]);
 
   useEffect(() => {
     sessionStorage.setItem("filters", JSON.stringify(filters));
