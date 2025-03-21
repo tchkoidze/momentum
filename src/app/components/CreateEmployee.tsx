@@ -298,14 +298,16 @@ const CreateEmployee = () => {
 
               {selectedImage ? (
                 <div className="relative">
-                  <div className="w-[88px] h-[88px]"></div>
-                  <Image
-                    src={selectedImage}
-                    alt="Uploaded_avatar"
-                    width={88}
-                    height={88}
-                    className="w-full h-full rounded-full object-cover"
-                  />
+                  <div className="w-[88px] h-[88px]">
+                    <Image
+                      src={selectedImage}
+                      alt="Uploaded_avatar"
+                      width={88}
+                      height={88}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
+
                   {/* <img
                     src={selectedImage}
                     alt="Uploaded"
