@@ -6,7 +6,6 @@ import {
   getPriorities,
   getStatuses,
 } from "@/api/getAPI";
-import CreateEmployee from "@/app/components/CreateEmployee";
 import TaskCard from "@/app/components/TaskCard";
 import {
   Department,
@@ -17,9 +16,7 @@ import {
   Task,
 } from "@/types/type";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { IoIosClose } from "react-icons/io";
 import { IoChevronDownOutline, IoCloseOutline } from "react-icons/io5";
 
 const initialFilters: Filters = {
@@ -56,7 +53,7 @@ const Tasks = () => {
         setFilters(parsedFilters);
         setDepartmentSelector(parsedFilters.departments);
         setPrioritySelector(parsedFilters.priorities);
-        parsedFilters.employee ?? setEmployeeSelector(parsedFilters.employee);
+        if (parsedFilters.employee) setEmployeeSelector(parsedFilters.employee);
       } catch (error) {
         console.error("Error parsing stored filters:", error);
       }
@@ -72,7 +69,6 @@ const Tasks = () => {
       try {
         const allDepartments = await getDepartments();
         setDepartments(allDepartments);
-        console.log(departments);
       } catch (error) {
         console.error("Error fetching departments:", error);
       }

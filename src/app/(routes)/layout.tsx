@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CreateEmployee from "../components/CreateEmployee";
 import Header from "../components/Header";
 import { usePathname } from "next/navigation";
@@ -12,7 +12,7 @@ interface LayoutProps {
 function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   useEffect(() => {
-    const referrer = document.referrer;
+    //const referrer = document.referrer;
 
     if (pathname !== "/tasks") {
       sessionStorage.removeItem("filters");

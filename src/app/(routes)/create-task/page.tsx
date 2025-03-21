@@ -27,8 +27,7 @@ const CreateTask = () => {
   const [dropDownPriorities, setDropdownPriorities] = useState(false);
   const [dropDownStatus, setDropdownStatus] = useState(false);
   const [dropdownEmployee, setDropdownEmployee] = useState(false);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [isTaskSubmitted, setIsTaskSubmitted] = useState(false);
+  //const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const [data, setData] = useState<Data>({
     name: "",
@@ -45,7 +44,6 @@ const CreateTask = () => {
   const {
     register,
     setValue,
-    watch,
     handleSubmit,
     formState: { errors, dirtyFields },
   } = useForm({
@@ -137,7 +135,7 @@ const CreateTask = () => {
     //     } as Data)
     // );
     setData((prevData) => {
-      let updatedData = { ...prevData, [fieldName]: value };
+      const updatedData = { ...prevData, [fieldName]: value };
 
       if (fieldName === "department_id") {
         updatedData.employee_id = "";
@@ -510,11 +508,9 @@ const CreateTask = () => {
                                     e.currentTarget.value
                                   ),
                               })}
-                              onClick={(
-                                e: React.MouseEvent<HTMLInputElement>
-                              ) => {
+                              onClick={() => {
                                 setDropdownDepartments(false);
-                                setSelectedDepartment(e.currentTarget.value);
+                                //setSelectedDepartment(e.currentTarget.value);
                                 // handleInputChange(
                                 //   "department_id",
                                 //   e.currentTarget.value

@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-// const isImage = (file: File) => file.type.startsWith("image/");
-const isImage = (file: File) =>
-  ["image/jpeg", "image/png", "image/jpg"].includes(file.type);
-
 export const addEmployeeSchema = z.object({
   name: z
     .string()
@@ -36,3 +32,5 @@ export const addEmployeeSchema = z.object({
   }),
 });
 //.required({ name: true, surname: true, department: true });
+
+export type AddEmployeeFormData = z.infer<typeof addEmployeeSchema>;

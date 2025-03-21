@@ -4,7 +4,6 @@ import { Comment } from "@/types/type";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PiArrowBendUpLeftFill } from "react-icons/pi";
-import { text } from "stream/consumers";
 
 const Comments = ({ task }: { task: number }) => {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -26,17 +25,17 @@ const Comments = ({ task }: { task: number }) => {
     if (task) {
       fetchComments(task);
     }
-  }, []);
+  }, [task]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
   };
 
-  const handleReplyInputChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setSubcommentText(event.target.value);
-  };
+  // const handleReplyInputChange = (
+  //   event: React.ChangeEvent<HTMLTextAreaElement>
+  // ) => {
+  //   setSubcommentText(event.target.value);
+  // };
 
   const handleSendComment = async (parent_id?: number) => {
     const content = parent_id ? subCommentText : text;
@@ -73,7 +72,6 @@ const Comments = ({ task }: { task: number }) => {
         ></textarea>
         <div className="flex justify-end mt-[6px]">
           <button
-            // onClick={() => addComment(task, { text: "" })}
             onClick={() => handleSendComment()}
             className="h-[35px] text-base text-white bg-[#8338EC] hover:bg-[#B588F4] focus:bg-[#B588F4] px-5 rounded-[20px] cursor-pointer"
           >

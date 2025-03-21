@@ -2,7 +2,6 @@
 import { getStatuses, getTaskById } from "@/api/getAPI";
 import { updateStatuse } from "@/api/updateAPI";
 import { Status, Task } from "@/types/type";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +23,6 @@ const dayMap: Record<string, string> = {
 
 const TaskBYId = () => {
   const [task, setTask] = useState<Task | null>(null);
-  const [openDeletion, setOpenDeletion] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [statuses, setStatuses] = useState<Status[]>([]);
@@ -85,6 +83,13 @@ const TaskBYId = () => {
       console.log(error);
     }
   };
+
+  if (loading) {
+    return <div>Loading ... </div>;
+  }
+  if (fetchError) {
+    return <div>{fetchError}</div>;
+  }
 
   return (
     <div className="flex gap-[223px] mt-10 mb-[100px] w-[1920px] px-[120px] mx-auto">
